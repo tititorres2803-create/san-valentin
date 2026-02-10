@@ -43,7 +43,6 @@
       display: flex;
       justify-content: center;
       gap: 20px;
-      flex-wrap: wrap;
       position: relative;
     }
 
@@ -51,19 +50,18 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 22px;
+      padding: 14px 24px;
       font-size: 1.1rem;
       border: none;
       border-radius: 14px;
       cursor: pointer;
-      transition: transform 0.3s ease;
-      position: relative;
+      transition: all 0.3s ease;
     }
 
     #yesBtn {
       background-color: #2ecc71;
       color: white;
-      z-index: 5; /* SIEMPRE ADELANTE */
+      z-index: 5;
     }
 
     #noBtn {
@@ -73,7 +71,6 @@
     }
 
     .btn-heart {
-      display: inline-block;
       animation: pulse 1.2s infinite;
     }
 
@@ -98,34 +95,19 @@
       border-radius: 16px;
     }
 
-    .final h2 {
-      font-size: 1.6rem;
-    }
-
-    .final p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    /* CORAZONES FLOTANTES */
+    /* CORAZONES FLOTANDO */
     .heart {
       position: fixed;
       bottom: -20px;
       font-size: 20px;
       animation: float 6s linear infinite;
       opacity: 0.8;
-      z-index: 1;
+      z-index: 0;
     }
 
     @keyframes float {
-      from {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-120svh);
-        opacity: 0;
-      }
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-120svh); opacity: 0; }
     }
   </style>
 </head>
@@ -137,15 +119,11 @@
 
     <div class="buttons" id="buttons">
       <button id="yesBtn">
-        <span class="btn-heart">❤️</span>
-        Sí
-        <span class="btn-heart">❤️</span>
+        <span class="btn-heart">❤️</span> Sí <span class="btn-heart">❤️</span>
       </button>
 
       <button id="noBtn">
-        <span class="btn-heart">💔</span>
-        No
-        <span class="btn-heart">💔</span>
+        <span class="btn-heart">💔</span> No <span class="btn-heart">💔</span>
       </button>
     </div>
 
@@ -162,4 +140,43 @@
 
   <script>
     const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("n
+    const noBtn = document.getElementById("noBtn");
+    const buttons = document.getElementById("buttons");
+    const final = document.getElementById("final");
+    const title = document.getElementById("title");
+
+    let grow = 0;
+
+    noBtn.addEventListener("click", () => {
+      grow += 20;
+
+      yesBtn.style.padding = `${14 + grow}px ${24 + grow}px`;
+      yesBtn.style.fontSize = `${1.1 + grow / 50}rem`;
+
+      // cuando ya lo tapa, el NO deja de recibir clicks
+      if (grow > 60) {
+        noBtn.style.pointerEvents = "none";
+        noBtn.style.opacity = "0.3";
+      }
+    });
+
+    yesBtn.addEventListener("click", () => {
+      buttons.style.display = "none";
+      title.style.display = "none";
+      final.style.display = "flex";
+    });
+
+    // corazones flotando
+    setInterval(() => {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerText = "❤️";
+      h.style.left = Math.random() * 100 + "vw";
+      h.style.animationDuration = 4 + Math.random() * 3 + "s";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 7000);
+    }, 400);
+  </script>
+
+</body>
+</html>
