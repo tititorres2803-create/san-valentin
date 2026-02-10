@@ -27,7 +27,6 @@
             width: 100%;
             max-width: 400px;
             text-align: center;
-            position: relative;
             z-index: 2;
         }
 
@@ -68,30 +67,28 @@
             display: none;
             position: fixed;
             inset: 0;
+            background: url("fotito.jpeg") center / cover no-repeat;
             color: white;
             font-size: 2.2rem;
             text-align: center;
             z-index: 3;
         }
 
-        .with-bg {
-            background: url("fotito.jpeg") center / cover no-repeat;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
         .overlay {
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.45);
-            z-index: 1;
         }
 
         .text {
             position: relative;
             z-index: 2;
             padding: 20px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
         /* Corazones */
@@ -129,7 +126,7 @@
 </div>
 
 <!-- Pantalla final -->
-<div class="message with-bg" id="finalMessage">
+<div class="message" id="finalMessage">
     <div class="overlay"></div>
     <div class="text">
         💘 Yo sabía que ibas a decir que sí 💘<br><br>
@@ -151,7 +148,6 @@
     noBtn.addEventListener("click", () => {
         scale += 0.35;
         yesBtn.style.transform = `scale(${scale})`;
-
         noBtn.style.opacity = Math.max(0, 1 - scale / 3);
 
         if (scale >= 2.8) {
@@ -162,10 +158,10 @@
     // Al apretar SÍ
     yesBtn.addEventListener("click", () => {
         container.style.display = "none";
-        finalMessage.style.display = "flex";
+        finalMessage.style.display = "block";
     });
 
-    // Generador de corazones
+    // Corazones flotando
     function createHeart() {
         const heart = document.createElement("div");
         heart.classList.add("heart");
@@ -177,9 +173,7 @@
 
         document.body.appendChild(heart);
 
-        setTimeout(() => {
-            heart.remove();
-        }, 6000);
+        setTimeout(() => heart.remove(), 6000);
     }
 
     setInterval(createHeart, 300);
