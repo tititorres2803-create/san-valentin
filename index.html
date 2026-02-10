@@ -44,6 +44,7 @@
       justify-content: center;
       gap: 20px;
       flex-wrap: wrap;
+      position: relative;
     }
 
     button {
@@ -56,16 +57,19 @@
       border-radius: 14px;
       cursor: pointer;
       transition: transform 0.3s ease;
+      position: relative;
     }
 
     #yesBtn {
       background-color: #2ecc71;
       color: white;
+      z-index: 5; /* SIEMPRE ADELANTE */
     }
 
     #noBtn {
       background-color: #e74c3c;
       color: white;
+      z-index: 1;
     }
 
     .btn-heart {
@@ -158,37 +162,4 @@
 
   <script>
     const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const buttons = document.getElementById("buttons");
-    const final = document.getElementById("final");
-    const title = document.getElementById("title");
-
-    let scale = 1;
-
-    noBtn.addEventListener("click", () => {
-      scale += 0.25;
-      yesBtn.style.transform = `scale(${scale})`;
-    });
-
-    yesBtn.addEventListener("click", () => {
-      buttons.style.display = "none";
-      title.style.display = "none";
-      final.style.display = "flex";
-    });
-
-    // Corazones flotando
-    function crearCorazon() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerText = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
-    }
-
-    setInterval(crearCorazon, 400);
-  </script>
-
-</body>
-</html>
+    const noBtn = document.getElementById("n
